@@ -13,7 +13,7 @@
       </button>
     </div>
 
-    <div class="sidebar-content" v-bind:class="{ 'invisible': !menuVisible }">
+    <div class="sidebar-content" v-bind:class="{ invisible: !menuVisible }">
       <nav id="main-menu-navigation" class="navigation-main">
         <div li v-for="item in menu" v-bind:key="item.id" class="nav-item">
           <span v-if="!item.route">
@@ -24,7 +24,11 @@
             <i class="ik" v-bind:class="getIcon(item)"></i>&nbsp;
             <span>{{ $t(item.label) }}</span>
           </router-link>
-          <div v-for="itemChild in item.children" v-bind:key="itemChild.id" class="submenu-content">
+          <div
+            v-for="itemChild in item.children"
+            v-bind:key="itemChild.id"
+            class="submenu-content"
+          >
             <span v-if="!itemChild.route">
               <i class="ik" v-bind:class="getIcon(itemChild)"></i>&nbsp;
               <span>{{ $t(itemChild.label) }}</span>
@@ -34,6 +38,14 @@
               <span>{{ $t(itemChild.label) }}</span>
             </router-link>
           </div>
+        </div>
+        <div class="inrae-logo center">
+          <img
+            v-bind:src="
+              $opensilex.getResourceURI('images/logo-inrae.png')
+            "
+            alt="inrae-logo"
+          />
         </div>
       </nav>
     </div>
@@ -216,5 +228,15 @@ nav > .nav-item > span {
 .hamburger-inner:after,
 .hamburger-inner:before {
   width: 35px;
+}
+
+.inrae-logo {
+  width: 110px;
+  position: absolute;
+  bottom: 15px;
+}
+
+.inrae-logo > img {
+  max-width: 150px;
 }
 </style>

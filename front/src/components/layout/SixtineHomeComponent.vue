@@ -5,6 +5,14 @@
         <img v-bind:src="$opensilex.getResourceURI('images/logo-sixtine.png')" alt="logo-sixtine" />
         <h2>{{$t('sixtine.welcome-message')}} <br/><br/> {{$t('sixtine.title')}}</h2>
       </div>
+      <div class="inrae-logo center">
+         <img
+            v-bind:src="
+              $opensilex.getResourceURI('images/logo-marque-inrae.png')
+            "
+            alt="inrae-logo"
+          />
+      </div>
     </div>
   </div>
 </template>
@@ -20,5 +28,9 @@ export default class DefaultHomeComponent extends Vue {}
 <style scoped lang="scss">
 .center {
     text-align: center;
+}
+
+.inrae-logo {
+  margin-top: 20px;
 }
 </style>

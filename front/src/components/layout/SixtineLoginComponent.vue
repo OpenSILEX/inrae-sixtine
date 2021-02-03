@@ -3,12 +3,15 @@
     <ValidationObserver ref="validatorRef">
       <b-form @submit.prevent="onLogin" class="fullmodal-form">
         <div class="login-header">
-          <img v-bind:src="$opensilex.getResourceURI('images/logo-sixtine.png')" alt="sixtine-logo" />
-          <h2>{{$t('sixtine.title')}}</h2>
+          <img
+            v-bind:src="$opensilex.getResourceURI('images/logo-sixtine.png')"
+            alt="sixtine-logo"
+          />
+          <h2>{{ $t("sixtine.title") }}</h2>
         </div>
 
         <div class="login-form-content">
-          <p>{{$t('sixtine.login.info')}}:</p>
+          <p>{{ $t("sixtine.login.info") }}:</p>
           <b-form-group id="login-group" required>
             <ValidationProvider
               :name="$t('component.login.validation.email')"
@@ -23,7 +26,9 @@
                 :placeholder="$t('component.login.input.email')"
               ></b-form-input>
               <i class="ik ik-user"></i>
-              <div class="error-message alert alert-danger">{{ errors[0] }}</div>
+              <div v-if="errors[0]" class="error-message alert alert-danger">
+                {{ errors[0] }}
+              </div>
             </ValidationProvider>
           </b-form-group>
 
@@ -41,12 +46,26 @@
                 :placeholder="$t('component.login.input.password')"
               ></b-form-input>
               <i class="ik ik-lock"></i>
-              <div class="error-message alert alert-danger">{{ errors[0] }}</div>
+              <div v-if="errors[0]" class="error-message alert alert-danger">
+                {{ errors[0] }}
+              </div>
             </ValidationProvider>
           </b-form-group>
           <div class="sign-btn text-center">
-            <b-button type="submit" variant="primary" v-text="$t('component.login.button.login')"></b-button>
+            <b-button
+              type="submit"
+              variant="primary"
+              v-text="$t('component.login.button.login')"
+            ></b-button>
           </div>
+        </div>
+        <div class="logo-inrae text-center">
+          <img
+            v-bind:src="
+              $opensilex.getResourceURI('images/logo-marque-inrae.png')
+            "
+            alt="inrae-logo"
+          />
         </div>
       </b-form>
     </ValidationObserver>
@@ -57,7 +76,7 @@
 import { Component, Ref } from "vue-property-decorator";
 import { TokenGetDTO } from "opensilex-security/index";
 import HttpResponse, {
-  OpenSilexResponse
+  OpenSilexResponse,
 } from "opensilex-security/HttpResponse";
 import Vue from "vue";
 
@@ -66,7 +85,7 @@ export default class SixtineLoginComponent extends Vue {
   get form() {
     return {
       email: "",
-      password: ""
+      password: "",
     };
   }
 
@@ -89,14 +108,14 @@ export default class SixtineLoginComponent extends Vue {
   forceRefresh = false;
   onLogin() {
     let validatorRef: any = this.validatorRef;
-    validatorRef.validate().then(isValid => {
+    validatorRef.validate().then((isValid) => {
       if (isValid) {
         this.$opensilex.showLoader();
         this.$opensilex
           .getService("opensilex-security.AuthenticationService")
           .authenticate({
             identifier: this.form.email,
-            password: this.form.password
+            password: this.form.password,
           })
           .then((http: HttpResponse<OpenSilexResponse<TokenGetDTO>>) => {
             let user = this.$opensilex.fromToken(http.response.result.token);
@@ -105,7 +124,7 @@ export default class SixtineLoginComponent extends Vue {
             this.$store.commit("login", user);
             this.$store.commit("refresh");
           })
-          .catch(error => {
+          .catch((error) => {
             if (error.status == 403) {
               console.error("Invalid credentials", error);
               this.$opensilex.errorHandler(
@@ -188,4 +207,11 @@ fieldset {
   margin-bottom: 25px;
 }
 
+.logo-inrae {
+  margin-top: 25px;
+}
+
+.login-header, .logo-inrae {
+  margin-top: 50px;
+}
 </style>

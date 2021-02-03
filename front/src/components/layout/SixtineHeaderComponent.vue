@@ -92,9 +92,6 @@ export default class SixtineHeaderComponent extends Vue {
   align-items: center;
 }
 
-.app-logo {
-  text-align: left;
-}
 
 .app-actions {
   text-align: right;
@@ -106,6 +103,10 @@ export default class SixtineHeaderComponent extends Vue {
   font-size: 20x;
 }
 
+
+.app-logo {
+  text-align: left;
+}
 .app-logo > a > img {
   height: 50px;
 }
