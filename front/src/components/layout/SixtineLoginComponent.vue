@@ -11,6 +11,13 @@
         </div>
 
         <div class="login-form-content">
+          <opensilex-SelectForm
+            v-if="connectionOptions.length > 1"
+            :label="$t('LoginComponent.selectLoginMethod')"
+            :options="connectionOptions"
+            :selected.sync="loginMethod"
+            @select="loginMethodChange"
+          ></opensilex-SelectForm>
           <p>{{ $t("sixtine.login.info") }}:</p>
           <b-form-group id="login-group" required>
             <ValidationProvider
@@ -118,7 +125,10 @@ export default class SixtineLoginComponent extends Vue {
             password: this.form.password,
           })
           .then((http: HttpResponse<OpenSilexResponse<TokenGetDTO>>) => {
-            let user = this.$opensilex.fromToken(http.response.result.token);
+            let user = this.$opensilex.fromToken(
+              http.response.result.token,
+              http.response.result.credentials
+            );
             this.$opensilex.setCookieValue(user);
             this.forceRefresh = true;
             this.$store.commit("login", user);
@@ -138,6 +148,37 @@ export default class SixtineLoginComponent extends Vue {
           });
       }
     });
+  }
+
+  loginMethod = "password";
+
+  get connectionOptions() {
+    let options = [
+      {
+        id: "password",
+        label: this.$t("LoginComponent.passwordConnectionTitle"),
+      },
+    ];
+
+    let opensilexConfig = this.$opensilex.getConfig();
+
+    if (opensilexConfig.openIDAuthenticationURI) {
+      options.push({
+        id: "openid",
+        label: opensilexConfig.openIDConnectionTitle,
+      });
+    }
+
+    return options;
+  }
+
+  loginMethodChange(loginMethod) {
+    if (loginMethod.id == "openid") {
+      let opensilexConfig = this.$opensilex.getConfig();
+      window.location.href = opensilexConfig.openIDAuthenticationURI;
+    } else if (loginMethod.id == "password") {
+      this.validatorRef.reset();
+    }
   }
 }
 </script>
@@ -211,7 +252,8 @@ fieldset {
   margin-top: 25px;
 }
 
-.login-header, .logo-inrae {
+.login-header,
+.logo-inrae {
   margin-top: 50px;
 }
 </style>

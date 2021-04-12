@@ -30,7 +30,7 @@ public class SixtineModule extends OpenSilexModule implements SPARQLExtension {
 
         SPARQLConfig sparqlConfig = getOpenSilex().getModuleConfig(SPARQLModule.class, SPARQLConfig.class);
         list.add(new OntologyFileDefinition(
-                sparqlConfig.baseURI() + "germplasm",
+                sparqlConfig.baseURI() + "set/germplasms",
                 "ontologies/species.ttl",
                 Lang.TTL,
                 sparqlConfig.baseURIAlias() + "-species"

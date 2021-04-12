@@ -111,52 +111,6 @@
         <rdfs:label xml:lang="en">Growth chamber</rdfs:label>
     </owl:Class>
     
-
-
-    <!-- https://sixtine.inrae.fr/ontology#Plant -->
-
-    <owl:Class rdf:about="https://sixtine.inrae.fr/ontology#Plant">
-        <rdfs:subClassOf rdf:resource="http://www.opensilex.org/vocabulary/oeso#ScientificObject"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.opensilex.org/vocabulary/oeso#hasGermplasm"/>
-                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
-                <owl:onClass rdf:resource="http://www.opensilex.org/vocabulary/oeso#Germplasm"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:label xml:lang="en">Plant</rdfs:label>
-        <rdfs:label xml:lang="fr">Plante</rdfs:label>
-    </owl:Class>
-    
-
-
-    <!-- https://sixtine.inrae.fr/ontology#PlantPart -->
-
-    <!--    <owl:Class rdf:about="https://sixtine.inrae.fr/ontology#PlantPart">
-        <rdfs:subClassOf rdf:resource="http://www.opensilex.org/vocabulary/oeso#ScientificObject"/>
-    </owl:Class>-->
-    
-
-
-    <owl:DatatypeProperty rdf:about="https://sixtine.inrae.fr/ontology#hasAreaHA">
-        <rdfs:label xml:lang="en">Area (ha)</rdfs:label>
-        <rdfs:label xml:lang="fr">Superficie (ha)</rdfs:label>
-    </owl:DatatypeProperty>
-    
-    <!-- https://sixtine.inrae.fr/ontology#Plot -->
-
-    <owl:Class rdf:about="https://sixtine.inrae.fr/ontology#Plot">
-        <rdfs:subClassOf rdf:resource="http://www.opensilex.org/vocabulary/oeso#InfrastructureFacility"/>
-        <rdfs:label xml:lang="fr">Parcelle</rdfs:label>
-        <rdfs:label xml:lang="en">Plot</rdfs:label>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="https://sixtine.inrae.fr/ontology#hasAreaHA"/>
-                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
     
     <rdf:Description>
         <rdfs:label></rdfs:label>

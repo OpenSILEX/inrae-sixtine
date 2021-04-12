@@ -232,7 +232,7 @@ nav > .nav-item > span {
 
 .inrae-logo {
   width: 110px;
-  position: absolute;
+  position: fixed;
   bottom: 15px;
 }
 
