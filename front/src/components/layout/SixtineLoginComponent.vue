@@ -97,6 +97,7 @@ export default class SixtineLoginComponent extends Vue {
   }
 
   $store: any;
+  $t: any;
   $router: any;
 
   get user() {
