@@ -92,22 +92,62 @@ export default class SixtineLoginComponent extends Vue {
   get form() {
     return {
       email: "",
-      password: "",
+      password: ""
     };
   }
 
   $store: any;
-  $t: any;
   $router: any;
 
   get user() {
     return this.$store.state.user;
   }
 
-  $opensilex: any;
+  get release() {
+    return this.$store.state.release;
+  }
+
+  loginMethod = "password";
+
+  get connectionOptions() {
+    let options = [
+      {
+        id: "password",
+        label: this.$t("LoginComponent.passwordConnectionTitle")
+      }
+    ];
+
+    let opensilexConfig = this.$opensilex.getConfig();
+
+    if (opensilexConfig.openIDAuthenticationURI) {
+      options.push({
+        id: "openid",
+        label: opensilexConfig.openIDConnectionTitle
+      });
+    }
+
+    return options;
+  }
+
+  loginMethodChange(loginMethod) {
+    console.error(loginMethod);
+    if (loginMethod.id == "openid") {
+      let opensilexConfig = this.$opensilex.getConfig();
+      window.location.href = opensilexConfig.openIDAuthenticationURI;
+    } else if (loginMethod.id == "password") {
+      this.validatorRef.reset();
+    }
+  }
+
+  $opensilex;
 
   static async asyncInit($opensilex) {
     await $opensilex.loadService("opensilex-security.AuthenticationService");
+  }
+
+  logout() {
+    this.$store.commit("logout");
+    this.$router.push("/");
   }
 
   @Ref("validatorRef") readonly validatorRef!: any;
@@ -115,26 +155,25 @@ export default class SixtineLoginComponent extends Vue {
   forceRefresh = false;
   onLogin() {
     let validatorRef: any = this.validatorRef;
-    validatorRef.validate().then((isValid) => {
+    validatorRef.validate().then(isValid => {
       if (isValid) {
         this.$opensilex.showLoader();
         this.$opensilex
-          .getService("opensilex-security.AuthenticationService")
+          .getService(
+            "opensilex-security.AuthenticationService"
+          )
           .authenticate({
             identifier: this.form.email,
-            password: this.form.password,
+            password: this.form.password
           })
           .then((http: HttpResponse<OpenSilexResponse<TokenGetDTO>>) => {
-            let user = this.$opensilex.fromToken(
-              http.response.result.token,
-              http.response.result.credentials
-            );
+            let user = this.$opensilex.fromToken(http.response.result.token);
             this.$opensilex.setCookieValue(user);
             this.forceRefresh = true;
             this.$store.commit("login", user);
             this.$store.commit("refresh");
           })
-          .catch((error) => {
+          .catch(error => {
             if (error.status == 403) {
               console.error("Invalid credentials", error);
               this.$opensilex.errorHandler(
@@ -148,37 +187,6 @@ export default class SixtineLoginComponent extends Vue {
           });
       }
     });
-  }
-
-  loginMethod = "password";
-
-  get connectionOptions() {
-    let options = [
-      {
-        id: "password",
-        label: this.$t("LoginComponent.passwordConnectionTitle"),
-      },
-    ];
-
-    let opensilexConfig = this.$opensilex.getConfig();
-
-    if (opensilexConfig.openIDAuthenticationURI) {
-      options.push({
-        id: "openid",
-        label: opensilexConfig.openIDConnectionTitle,
-      });
-    }
-
-    return options;
-  }
-
-  loginMethodChange(loginMethod) {
-    if (loginMethod.id == "openid") {
-      let opensilexConfig = this.$opensilex.getConfig();
-      window.location.href = opensilexConfig.openIDAuthenticationURI;
-    } else if (loginMethod.id == "password") {
-      this.validatorRef.reset();
-    }
   }
 }
 </script>
