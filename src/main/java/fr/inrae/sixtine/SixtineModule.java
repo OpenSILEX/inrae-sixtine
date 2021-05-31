@@ -22,8 +22,7 @@ public class SixtineModule extends OpenSilexModule implements SPARQLExtension {
     public List<OntologyFileDefinition> getOntologiesFiles() throws Exception {
         List<OntologyFileDefinition> list = SPARQLExtension.super.getOntologiesFiles();
         list.add(new OntologyFileDefinition(
-                //"https://sixtine.inrae.fr/ontology#",
-                "http://www.opensilex.org/vocabulary/oeso#",
+                "https://sixtine.inrae.fr/ontology#",
                 "ontologies/inrae-sixtine.owl",
                 Lang.RDFXML,
                 "inrae-sixtine"
