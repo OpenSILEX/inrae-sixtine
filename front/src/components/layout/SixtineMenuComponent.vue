@@ -1,53 +1,53 @@
 <template>
-  <div class="app-sidebar">
+  <div>
     <div class="hamburger-container">
-      <button
-        class="hamburger hamburger--collapse"
-        v-bind:class="{ 'is-active': menuVisible }"
-        type="button"
-        @click="toggleMenu()"
-      >
+      <button class="hamburger hamburger--collapse" v-bind:class="{ 'is-active': menuVisible }" type="button" @click="toggleMenu()">
         <span class="hamburger-box">
           <span class="hamburger-inner"></span>
         </span>
       </button>
     </div>
+    <div class="app-sidebar">
+      <div class="sidebar-content">
+        <div class="nav-container">
+          <nav id="main-menu-navigation" class="navigation-main">
+            <div li v-for="item in menu" v-bind:key="item.id" class="nav-item"
+              v-bind:class="{'has-sub': item.hasChildren(), open: item.showChildren, active: isActive(item)}"
+            >
+              <a v-if="item.hasChildren()" href="#" v-on:click="toogle(item, $event)">
+                <i class="ik" v-bind:class="getIcon(item)"></i>
+                <span>{{ $t(item.label) }}</span>
+              </a>
 
-    <div class="sidebar-content" v-bind:class="{ invisible: !menuVisible }">
-      <nav id="main-menu-navigation" class="navigation-main">
-        <div li v-for="item in menu" v-bind:key="item.id" class="nav-item">
-          <span v-if="!item.route">
-            <i class="ik" v-bind:class="getIcon(item)"></i>&nbsp;
-            <span>{{ $t(item.label) }}</span>
-          </span>
-          <router-link v-else :to="item.route.path">
-            <i class="ik" v-bind:class="getIcon(item)"></i>&nbsp;
-            <span>{{ $t(item.label) }}</span>
-          </router-link>
-          <div
-            v-for="itemChild in item.children"
-            v-bind:key="itemChild.id"
-            class="submenu-content"
-          >
-            <span v-if="!itemChild.route">
-              <i class="ik" v-bind:class="getIcon(itemChild)"></i>&nbsp;
-              <span>{{ $t(itemChild.label) }}</span>
-            </span>
-            <router-link v-else :to="itemChild.route.path">
-              <i class="ik" v-bind:class="getIcon(itemChild)"></i>&nbsp;
-              <span>{{ $t(itemChild.label) }}</span>
-            </router-link>
-          </div>
+              <router-link v-else :to="item.route.path" :active="isActive">
+                <i class="ik" v-bind:class="getIcon(item)"></i>
+                <span>{{ $t(item.label) }}</span>
+              </router-link>
+
+              <div class="submenu-content" v-bind:class="{ open: item.showChildren }">
+                <router-link
+                  v-for="itemChild in item.children"
+                  v-bind:key="itemChild.id"
+                  v-bind:class="{ 'is-shown': item.showChildren, active: isActive(itemChild) }"
+                  class="menu-item"
+                  :to="itemChild.route.path"
+                >
+                  {{ $t(itemChild.label) }}
+                </router-link>
+              </div>
+            </div>
+            <div li class="nav-item">
+              <a v-if="versionInfo.api_docs.url != undefined" :href="versionInfo.api_docs.url" target="_blank"
+                class="router-link-exact-active router-link-active"
+              >
+                <b-img fluid width="25" src="https://cdn.svgporn.com/logos/swagger.svg"/>
+                &nbsp;&nbsp;&nbsp;
+                <span class="ml-1">{{ $t("component.menu.web-api") }}</span>
+              </a>
+            </div>
+          </nav>
         </div>
-        <div class="inrae-logo center">
-          <img
-            v-bind:src="
-              $opensilex.getResourceURI('images/logo-inrae.png')
-            "
-            alt="inrae-logo"
-          />
-        </div>
-      </nav>
+      </div>
     </div>
   </div>
 </template>
@@ -55,43 +55,20 @@
 <script lang="ts">
 import { Component } from "vue-property-decorator";
 import Vue from "vue";
+import { Menu } from "../../../../../opensilex-front/front/src/models/Menu";
 
+// @ts-ignore
+import { versionInfoDTO } from "opensilex-core/index";
 @Component
 export default class SixtineMenuComponent extends Vue {
-  $store: any;
-  $t: any;
-
-  width;
-
-  created() {
-    window.addEventListener("resize", this.handleResize);
-    this.handleResize();
-  }
-
-  beforeDestroy() {
-    window.removeEventListener("resize", this.handleResize);
-  }
-
-  handleResize() {
-    const minSize = 768;
-    if (
-      document.body.clientWidth <= minSize &&
-      (this.width == null || this.width > minSize)
-    ) {
-      this.width = document.body.clientWidth;
-      this.$store.commit("hideMenu");
-    } else if (
-      document.body.clientWidth > minSize &&
-      (this.width == null || this.width <= minSize)
-    ) {
-      this.width = document.body.clientWidth;
-      this.$store.commit("showMenu");
-    }
-  }
-
   $route: any;
+  $store: any;
+  $opensilex: any;
+  $t : any;
 
-  get menu(): Array<any> {
+  versionInfo: versionInfoDTO;
+
+  get menu(): Array<Menu> {
     return this.$store.state.menu;
   }
 
@@ -103,18 +80,22 @@ export default class SixtineMenuComponent extends Vue {
     return this.$store.state.menuVisible;
   }
 
+  created() {
+      this.versionInfo = this.$opensilex.versionInfo;
+  }
+
   toggleMenu(): void {
     this.$store.commit("toggleMenu");
   }
 
-  toogle(item: any, event: MouseEvent): void {
+  toogle(item: Menu, event: MouseEvent): void {
     if (item.hasChildren()) {
       console.info("toogle menu, old value = " + item.showChildren);
       item.showChildren = !item.showChildren;
     }
   }
 
-  getIcon(item: any): string {
+  getIcon(item: Menu): string {
     var code = "icon." + item.label;
     var result = this.$t(code);
     if (code != result) {
@@ -123,68 +104,22 @@ export default class SixtineMenuComponent extends Vue {
     return "ik-folder";
   }
 
-  isActive(item: any): boolean {
+  isActive(item: Menu): boolean {
     return item.route && this.$route.path.indexOf(item.route.path) === 0;
   }
 }
 </script>
 
 <style scoped lang="scss">
-@import "../../../theme/sixtine/variables.scss";
-
-.sidebar-content {
-  height: 100%;
-  padding: 15px;
-  background-color: getVar(--highlightBackgroundColorDark);
-  color: getVar(--defaultColorLight);
-}
-
-.sidebar-content.invisible {
-  display: none;
-}
-
-.nav-item a,
-.nav-item > span,
-.nav-item > i {
-  white-space: nowrap;
-  color: getVar(--defaultColorLight);
-}
-
-.nav-item a,
-.nav-item > span {
-  font-size: 14px;
-}
-
-.nav-item a:hover,
-.nav-item a:hover i {
-  color: getVar(--highlightColorLight);
-  transition: color 0.1s ease;
-}
-
-.nav-item > span {
-  padding-top: 6px;
-  display: inline-block;
-  cursor: default;
-}
-
-.nav-item .submenu-content {
-  margin-left: 10px;
-}
-
-nav > .nav-item > span {
-  color: getVar(--highlightColorLight);
-}
-
 .hamburger-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
+  position: fixed;
+  z-index: 1030;
   -webkit-user-select: none;
   user-select: none;
-  background: getVar(--highlightBackgroundColorLight);
-  height: 54px;
-  width: 70px;
+  height: 60px;
+  width: 60px;
+  left: 180px;
+  background-color: #00a38d;
 }
 
 .hamburger {
@@ -203,7 +138,7 @@ nav > .nav-item > span {
 .hamburger.is-active .hamburger-inner,
 .hamburger.is-active .hamburger-inner::after,
 .hamburger.is-active .hamburger-inner::before {
-  background-color: getVar(--linkColor);
+  background-color: #fff;
 }
 
 .hamburger:hover .hamburger-inner,
@@ -212,7 +147,7 @@ nav > .nav-item > span {
 .hamburger.is-active:hover .hamburger-inner,
 .hamburger.is-active:hover .hamburger-inner::after,
 .hamburger.is-active:hover .hamburger-inner::before {
-  background-color: getVar(--linkHighlightColor);
+  background-color: rgb(221, 221, 221);
 }
 
 .hamburger.is-active:hover,
@@ -228,15 +163,5 @@ nav > .nav-item > span {
 .hamburger-inner:after,
 .hamburger-inner:before {
   width: 35px;
-}
-
-.inrae-logo {
-  width: 110px;
-  position: fixed;
-  bottom: 15px;
-}
-
-.inrae-logo > img {
-  max-width: 150px;
 }
 </style>
