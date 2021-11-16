@@ -2,7 +2,7 @@
 * GLOBAL STYLE
 *********************************/
 .bg-phis-green {
-    background-color: #fafffe
+    background-color: #00A38D
 }
 
 .inline-action .inline-action-btn {
@@ -428,7 +428,7 @@
     height: 100%;
     top: 0;
     left: 0;
-    background: linear-gradient(135deg, rgba(0,163,141,0.2) 0%, rgba(0,163,141,0.7) 100%);
+    background: linear-gradient(135deg, rgba(0,163,141,0.2) 0%, rgba(255, 255, 255, 0) 100%);
 }
 
 .auth-wrapper .authentication-form .logo-centered {
