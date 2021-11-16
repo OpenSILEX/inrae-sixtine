@@ -1650,8 +1650,8 @@
     <owl:Class rdf:about="http://www.opensilex.org/vocabulary/oeso#Rootstock">
         <rdfs:subClassOf rdf:resource="http://www.opensilex.org/vocabulary/oeso#ScientificObject"/>
         <rdfs:comment xml:lang="en">Grape variety used as the underground portion of a grafted vine onto which the scion is grafted. Bred to provide pest resistance and/or adaptability to unfavorable soil or environmental conditions.</rdfs:comment>
-        <rdfs:label xml:lang="fr">porte-greffe</rdfs:label>
-        <rdfs:label xml:lang="en">rootstock</rdfs:label>
+        <rdfs:label xml:lang="fr">Porte-greffe</rdfs:label>
+        <rdfs:label xml:lang="en">Rootstock</rdfs:label>
     </owl:Class>
     
 
@@ -2173,8 +2173,8 @@
         <rdfs:label xml:lang="fr">ouverture (fnumber)</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.opensilex.org/vocabulary/oeso#attenuatorFilter">
-        <rdfs:label xml:lang="en">attenuator filter</rdfs:label>
         <rdfs:label xml:lang="fr">filtre atténuateur</rdfs:label>
+        <rdfs:label xml:lang="en">attenuator filter</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.opensilex.org/vocabulary/oeso#brdfP1">
         <rdfs:comment xml:lang="en">BRDF(θ)=P1+P2cos(θ)+1/2*P3(3*cos^2θ−1)+1/2*P4(5*cos^3θ−3*cosθ)</rdfs:comment>
