@@ -4,12 +4,6 @@
         "title": "Système d'Information pour les Unités Expérimentales d'INRAE",
         "login": {
             "info": "Merci de saisir vos identifiants pour vous connecter à l'application"
-        },
-    "component": {
-        "menu": {
-            "devices": "Equipements",
-            "facilities": "Installations"
-            }
         }
     }
 }
