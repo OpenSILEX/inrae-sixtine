@@ -5,9 +5,11 @@
         "login": {
             "info": "Merci de saisir vos identifiants pour vous connecter à l'application"
         },
-    "menu": {
-        "devices": "Equipements",
-        "facilities": "Installations"
+    "component": {
+        "menu": {
+            "devices": "Equipements",
+            "facilities": "Installations"
+            }
         }
     }
 }
