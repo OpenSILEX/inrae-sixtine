@@ -494,10 +494,10 @@ p {
 								.submenu-content {
 								    background-color: #f3f3f3;
 								    .menu-item {
-										font-size: 13px;
-										padding: 10px 5px 10px 50px;
-										margin: 0;
-										text-overflow: ellipsis;
+										padding: 10px 5px;
+									    font-size: 13px;
+									    padding-left: 50px;
+									    margin: 0;
 									    &::before {
 										    display: none;
 										}
