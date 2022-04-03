@@ -79,6 +79,7 @@ p {
     background-color: $white;
     border-color: $empty;
     margin: 0;
+	width: 170px;
     @include border-radius(6px);
     @include box-shadow(0 2px 30px rgba(0,0,0,.08));
 	.dropdown-item {
@@ -494,9 +495,8 @@ p {
 								.submenu-content {
 								    background-color: #f3f3f3;
 								    .menu-item {
-										padding: 10px 5px;
+										padding: 10px 5px 10px 50px;
 									    font-size: 13px;
-									    padding-left: 50px;
 									    margin: 0;
 										text-overflow: ellipsis;
 									    &::before {
