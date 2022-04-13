@@ -112,7 +112,7 @@ trigger:sixtine:deploy:test:
 ##  SIXTINE SANDBOX BUILD INSTANCE
 ######################## 
 
-sixtine-sandbox:build:
+sixtine:sandbox:build:
   <<: *build_template_with_opensilex
   variables:
     BRANCH: sixtine-sandbox
@@ -135,10 +135,10 @@ sixtine-sandbox:build:
     paths:
       - $CI_PROJECT_DIR/$REVISION
       
-trigger:sixtine-sandbox:deploy:test:
+trigger:sixtine:sandbox:deploy:test:
   stage: deploy
   image: curlimages/curl
   script:
     - curl --request POST --form "variables[DEPLOY]=sixtine-test" --form "token=$CI_JOB_TOKEN" --form "ref=master" --form "variables[COMMIT_SHA_OPENSILEX_DEV]=$COMMIT_SHA_OPENSILEX_DEV" https://forgemia.inra.fr/api/v4/projects/403/trigger/pipeline
   needs: 
-    - job: "sixtine-sandbox:build"
+    - job: "sixtine:sandbox:build"
