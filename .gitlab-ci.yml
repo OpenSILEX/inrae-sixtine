@@ -131,7 +131,6 @@ sixtine:sandbox:build:
     - git fetch
     - git branch -a
     - git remote -v
-    - git checkout origin/sixtine-sandbox
     # Build opensilex-dev for module compilation
     - cd $CI_PROJECT_DIR/opensilex-dev
     - mvn clean install $MAVEN_CLI_OPTS -Pfor-module -Drevision=$REVISION
