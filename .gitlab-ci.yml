@@ -128,6 +128,8 @@ sixtine:sandbox:build:
     - git init
     - git pull https://gitlab-ci-token:${CI_JOB_TOKEN}@forgemia.inra.fr/OpenSILEX/opensilex-dev.git
     # Ensure to load same commit as used to generate opensilex-dev artifact
+    - git fetch
+    - git branch -a
     - git checkout sixtine-sandbox
     # Build opensilex-dev for module compilation
     - cd $CI_PROJECT_DIR/opensilex-dev
