@@ -113,7 +113,25 @@ trigger:sixtine:deploy:test:
 ######################## 
 
 sixtine:sandbox:build:
-  <<: *build_template_with_opensilex
+  before_script:
+    # Enable extended pattern for mv command
+    - shopt -s extglob
+    # Download and unzip latest artifact from opensilex-dev
+    - cd $CI_PROJECT_DIR
+    - rm -rf $REVISION
+    - 'curl --location --output artifacts.zip --header "JOB-TOKEN: $CI_JOB_TOKEN" "https://forgemia.inra.fr/api/v4/projects/1675/jobs/artifacts/$BRANCH/download?job=$BUILD_JOB"'
+    - unzip -o artifacts.zip
+    # Clone original opensilex-dev sources
+    - cd $CI_PROJECT_DIR
+    - mkdir -p $CI_PROJECT_DIR/opensilex-dev
+    - cd opensilex-dev
+    - git init
+    - git pull https://gitlab-ci-token:${CI_JOB_TOKEN}@forgemia.inra.fr/OpenSILEX/opensilex-dev.git
+    # Ensure to load same commit as used to generate opensilex-dev artifact
+    - git checkout sixtine-sandbox
+    # Build opensilex-dev for module compilation
+    - cd $CI_PROJECT_DIR/opensilex-dev
+    - mvn clean install $MAVEN_CLI_OPTS -Pfor-module -Drevision=$REVISION
   variables:
     BRANCH: sixtine-sandbox
     BUILD_JOB: sixtine-sandbox:build
@@ -134,6 +152,11 @@ sixtine:sandbox:build:
   artifacts:
     paths:
       - $CI_PROJECT_DIR/$REVISION
+  stage: build
+  image: maven:$MVN_VERSION-jdk-$JAVA_VERSION
+  except:
+    - schedules
+  
       
 trigger:sixtine:sandbox:deploy:test:
   stage: deploy
