@@ -50,6 +50,8 @@ variables:
     # Download and unzip latest artifact from opensilex-dev
     - cd $CI_PROJECT_DIR
     - rm -rf $REVISION
+    - echo "BRANCH: ${BRANCH}"
+    - echo "BUILD_JOB: ${BUILD_JOB}"
     - 'curl --location --output artifacts.zip --header "JOB-TOKEN: $CI_JOB_TOKEN" "https://forgemia.inra.fr/api/v4/projects/1675/jobs/artifacts/${BRANCH}/download?job=${BUILD_JOB}"'
     - unzip -o artifacts.zip
     # Clone original opensilex-dev sources
