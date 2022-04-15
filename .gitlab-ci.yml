@@ -50,14 +50,14 @@ variables:
     # Download and unzip latest artifact from opensilex-dev
     - cd $CI_PROJECT_DIR
     - rm -rf $REVISION
-    - 'curl --location --output artifacts.zip --header "JOB-TOKEN: $CI_JOB_TOKEN" "https://forgemia.inra.fr/api/v4/projects/1675/jobs/artifacts/$BRANCH/download?job=$BUILD_JOB"'
+    - 'curl --location --output artifacts.zip --header "JOB-TOKEN: $CI_JOB_TOKEN" "https://forgemia.inra.fr/api/v4/projects/1675/jobs/artifacts/${BRANCH}/download?job=${BUILD_JOB}"'
     - unzip -o artifacts.zip
     # Clone original opensilex-dev sources
     - cd $CI_PROJECT_DIR
     - mkdir -p $CI_PROJECT_DIR/opensilex-dev
     - cd opensilex-dev
     - git init
-    - git pull https://gitlab-ci-token:${CI_JOB_TOKEN}@forgemia.inra.fr/OpenSILEX/opensilex-dev.git
+    - git pull https://gitlab-ci-token:${CI_JOB_TOKEN}@forgemia.inra.fr/OpenSILEX/opensilex-dev.git ${BRANCH}
     # Ensure to load same commit as used to generate opensilex-dev artifact
     - |
       if [ ! -z "$COMMIT_SHA_OPENSILEX_DEV" ]; then
@@ -105,6 +105,7 @@ trigger:sixtine:deploy:test:
     - curl --request POST --form "variables[DEPLOY]=sixtine-test" --form "token=$CI_JOB_TOKEN" --form "ref=master" --form "variables[COMMIT_SHA_OPENSILEX_DEV]=$COMMIT_SHA_OPENSILEX_DEV" https://forgemia.inra.fr/api/v4/projects/403/trigger/pipeline
   needs: 
     - job: "sixtine:build"
+    - job: "sixtine-sandbox:build"
 
 
 
@@ -112,28 +113,8 @@ trigger:sixtine:deploy:test:
 ##  SIXTINE SANDBOX BUILD INSTANCE
 ######################## 
 
-sixtine:sandbox:build:
-  before_script:
-    # Enable extended pattern for mv command
-    - shopt -s extglob
-    # Download and unzip latest artifact from opensilex-dev
-    - cd $CI_PROJECT_DIR
-    - rm -rf $REVISION
-    - 'curl --location --output artifacts.zip --header "JOB-TOKEN: $CI_JOB_TOKEN" "https://forgemia.inra.fr/api/v4/projects/1675/jobs/artifacts/$BRANCH/download?job=$BUILD_JOB"'
-    - unzip -o artifacts.zip
-    # Clone original opensilex-dev sources
-    - cd $CI_PROJECT_DIR
-    - mkdir -p $CI_PROJECT_DIR/opensilex-dev
-    - cd opensilex-dev
-    - git init
-    - git pull https://gitlab-ci-token:${CI_JOB_TOKEN}@forgemia.inra.fr/OpenSILEX/opensilex-dev.git sixtine-sandbox
-    # Ensure to load same commit as used to generate opensilex-dev artifact
-    - git fetch
-    - git branch -a
-    - git remote -v
-    # Build opensilex-dev for module compilation
-    - cd $CI_PROJECT_DIR/opensilex-dev
-    - mvn clean install $MAVEN_CLI_OPTS -Pfor-module -Drevision=$REVISION
+sixtine-sandbox:build:
+  <<: *build_template_with_opensilex
   variables:
     BRANCH: sixtine-sandbox
     BUILD_JOB: sixtine-sandbox:build
@@ -158,12 +139,3 @@ sixtine:sandbox:build:
   image: maven:$MVN_VERSION-jdk-$JAVA_VERSION
   except:
     - schedules
-  
-      
-trigger:sixtine:sandbox:deploy:test:
-  stage: deploy
-  image: curlimages/curl
-  script:
-    - curl --request POST --form "variables[DEPLOY]=sixtine-test" --form "token=$CI_JOB_TOKEN" --form "ref=master" --form "variables[COMMIT_SHA_OPENSILEX_DEV]=$COMMIT_SHA_OPENSILEX_DEV" https://forgemia.inra.fr/api/v4/projects/403/trigger/pipeline
-  needs: 
-    - job: "sixtine:sandbox:build"
