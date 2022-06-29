@@ -13,7 +13,7 @@ variables:
  MVN_VERSION: 3.6.3
  # DEFAULT SERVER JAVA VERSION
  JAVA_VERSION: 11
- REVISION: 'INSTANCE-SNAPSHOT'
+ REVISION: '1.0.0-rc+3'
  # This will supress any download for dependencies and plugins or upload messages which would clutter the console log.
  # `showDateTime` will show the passed time in milliseconds. You need to specify `--batch-mode` to make this work.
  MAVEN_CACHE_FOLDER: "$CI_PROJECT_DIR/.m2/repository"
@@ -22,6 +22,7 @@ variables:
  NODE_CACHE: "$CI_PROJECT_DIR/opensilex-dev/.node"
  EMBDED_MONGO_CACHE: "/root/.embedmongo/"
  MODULE_ID: "inrae-sixtine"
+ COMMIT_SHA_OPENSILEX_DEV: "46e7b9ef71518c286d1bf6e853900718c6304bc3" # 1.0.0-rc+3
 
 ########################
 ##  CACHE TEMPLATE
@@ -95,10 +96,11 @@ sixtine:build:
     - cd $CI_PROJECT_DIR/opensilex-dev/$MODULE_ID
     - mvn install $MAVEN_CLI_OPTS -Drevision=$REVISION
     # Copy generated JAR module into opensilex-dev artifact "modules" folder
-    - mv $CI_PROJECT_DIR/opensilex-dev/$MODULE_ID/target/$MODULE_ID-$REVISION.jar $CI_PROJECT_DIR/$REVISION/modules/$MODULE_ID.jar
+    - curl --location --output artifacts.zip "https://github.com/OpenSILEX/opensilex/releases/download/$REVISION/opensilex-release-$REVISION.zip" && mkdir -p ${CI_PROJECT_DIR}/${OPENSILEX_APP_REVISION} && unzip -o artifacts.zip -d ${CI_PROJECT_DIR}/${OPENSILEX_APP_REVISION}
+    - mv $CI_PROJECT_DIR/opensilex-dev/$MODULE_ID/target/$MODULE_ID-$MODULE_REVISION.jar $CI_PROJECT_DIR/$OPENSILEX_APP_REVISION/modules/$MODULE_ID.jar
   artifacts:
     paths:
-      - $CI_PROJECT_DIR/$REVISION
+      - $CI_PROJECT_DIR/$OPENSILEX_APP_REVISION
       
 trigger:sixtine:deploy:test:
   stage: deploy
