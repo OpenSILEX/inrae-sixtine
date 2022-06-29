@@ -97,7 +97,8 @@ sixtine:build:
     - mvn install $MAVEN_CLI_OPTS -Drevision=$REVISION
     # Copy generated JAR module into opensilex-dev artifact "modules" folder
     - curl --location --output artifacts.zip "https://github.com/OpenSILEX/opensilex/releases/download/$REVISION/opensilex-release-$REVISION.zip" && mkdir -p ${CI_PROJECT_DIR}/${OPENSILEX_APP_REVISION} && unzip -o artifacts.zip -d ${CI_PROJECT_DIR}/${OPENSILEX_APP_REVISION}
-    - mv $CI_PROJECT_DIR/opensilex-dev/$MODULE_ID/target/$MODULE_ID-$MODULE_REVISION.jar $CI_PROJECT_DIR/$OPENSILEX_APP_REVISION/modules/$MODULE_ID.jar
+    - ls $CI_PROJECT_DIR/opensilex-dev/$MODULE_ID/target
+    - mv $CI_PROJECT_DIR/opensilex-dev/$MODULE_ID/target/$MODULE_ID.jar $CI_PROJECT_DIR/$OPENSILEX_APP_REVISION/modules/$MODULE_ID.jar
   artifacts:
     paths:
       - $CI_PROJECT_DIR/$OPENSILEX_APP_REVISION
