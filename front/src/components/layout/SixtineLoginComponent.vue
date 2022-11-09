@@ -138,8 +138,8 @@ export default class SixtineLoginComponent extends Vue {
 
   loginMethodChange(loginMethod) {
     console.error(loginMethod);
+    let opensilexConfig: FrontConfigDTO = this.$opensilex.getConfig();
     if (loginMethod.id == "openid") {
-      let opensilexConfig: FrontConfigDTO = this.$opensilex.getConfig();
       window.location.href = opensilexConfig.openIDAuthenticationURI;
     } else if (loginMethod.id === "shibboleth") {
       window.location.href = opensilexConfig.samlProxyLoginURI;
