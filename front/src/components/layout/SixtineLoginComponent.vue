@@ -122,6 +122,13 @@ export default class SixtineLoginComponent extends Vue {
       });
     }
 
+    if (opensilexConfig.samlProxyLoginURI) {
+      options.push({
+        id: "shibboleth",
+        label: opensilexConfig.samlConnectionTitle
+      })
+    }
+
     return options;
   }
 
@@ -134,6 +141,8 @@ export default class SixtineLoginComponent extends Vue {
     if (loginMethod.id == "openid") {
       let opensilexConfig: FrontConfigDTO = this.$opensilex.getConfig();
       window.location.href = opensilexConfig.openIDAuthenticationURI;
+    } else if (loginMethod.id === "shibboleth") {
+      window.location.href = opensilexConfig.samlProxyLoginURI;
     } else if (loginMethod.id == "password") {
       this.validatorRef.reset();
     }
