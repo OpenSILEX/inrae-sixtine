@@ -60,6 +60,7 @@ export default class SixtineHeaderComponent extends Vue {
   $i18n: any;
   $store: any;
   $opensilex: any;
+  $t :any;
 
   /**
    * Return the current connected user
