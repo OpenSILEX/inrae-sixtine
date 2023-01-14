@@ -831,6 +831,16 @@
     
 
 
+    <!-- http://www.opensilex.org/vocabulary/oeso#AgriculturalTechnicalInstitute -->
+
+    <owl:Class rdf:about="http://www.opensilex.org/vocabulary/oeso#AgriculturalTechnicalInstitute">
+        <rdfs:subClassOf rdf:resource="http://www.opensilex.org/vocabulary/oeso#Facility"/>
+        <rdfs:label xml:lang="en">Agricultural technical institute</rdfs:label>
+        <rdfs:label xml:lang="fr">Institute technique</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://www.opensilex.org/vocabulary/oeso#AirConditioning -->
 
     <owl:Class rdf:about="http://www.opensilex.org/vocabulary/oeso#AirConditioning">
@@ -2343,8 +2353,8 @@
         <rdfs:label xml:lang="fr">longueur d&apos;onde maximale (nm)</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.opensilex.org/vocabulary/oeso#minWavelength">
-        <rdfs:label xml:lang="fr">longueur d&apos;onde minimale (nm)</rdfs:label>
         <rdfs:label xml:lang="en">minimum wavelength (nm)</rdfs:label>
+        <rdfs:label xml:lang="fr">longueur d&apos;onde minimale (nm)</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.opensilex.org/vocabulary/oeso#pixelSize">
         <rdfs:label xml:lang="en">pixel size (μm)</rdfs:label>
