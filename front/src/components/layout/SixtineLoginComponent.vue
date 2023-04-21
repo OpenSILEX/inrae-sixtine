@@ -4,14 +4,14 @@
     <template v-slot:loginMedia>
       <b-img
         :src="
-          $opensilex.getResourceURI('images/sixtine-logo.png')
+          $opensilex.getResourceURI('images/opensilex-login-bg.jpg')
         "
       ></b-img>
     </template>
     <template v-slot:loginLogo>
       <b-img
         :src="
-          $opensilex.getResourceURI('images/opensilex-login-bg.jpg')
+          $opensilex.getResourceURI('images/sixtine-logo.png')
         "
         fluid
         alt="Responsive image"
@@ -46,16 +46,6 @@ export default class SixtineLoginComponent extends Vue {
     this.versionInfo = this.$opensilex.versionInfo;
   }
 
-  getSunagriModuleVersion() {
-    for (let module_version_index in this.versionInfo.modules_version) {
-      let module = this.versionInfo.modules_version[module_version_index];
-
-      if (module.name.includes("SunagriModule")) {
-        return module.version;
-      }
-    }
-    return "Version undefined";
-  }
 }
 </script>
 
