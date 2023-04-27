@@ -20,7 +20,7 @@ import { Component } from "vue-property-decorator";
 import Vue from "vue";
 
 @Component
-<!-- export default class SixtineHomeComponent extends Vue {} -->
+export default class SixtineHomeComponent extends Vue {}
 </script>
 
 <style scoped lang="scss">
