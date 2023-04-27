@@ -20,7 +20,7 @@ import { Component } from "vue-property-decorator";
 import Vue from "vue";
 
 @Component
-export default class SixtineHomeComponent extends Vue {}
+<!-- export default class SixtineHomeComponent extends Vue {} -->
 </script>
 
 <style scoped lang="scss">
@@ -31,7 +31,7 @@ export default class SixtineHomeComponent extends Vue {}
 .logo-centered > img {
   display: center;
   width: 600px;
-  height: 250px;  
+  height: 250px;
 }
 
 .inrae-logo {
