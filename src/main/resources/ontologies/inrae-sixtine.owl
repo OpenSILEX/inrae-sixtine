@@ -1280,6 +1280,16 @@
     
 
 
+    <!-- http://www.opensilex.org/vocabulary/oeso#JeSuisUnConceptDeSixtine -->
+
+    <owl:Class rdf:about="http://www.opensilex.org/vocabulary/oeso#JeSuisUnConceptDeSixtine">
+        <rdfs:subClassOf rdf:resource="http://www.opensilex.org/vocabulary/oeso#ScientificObject"/>
+        <rdfs:label xml:lang="en">JeSuisUnConceptDeSixtine</rdfs:label>
+        <rdfs:label xml:lang="fr">JeSuisUnConceptDeSixtine</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://www.opensilex.org/vocabulary/oeso#Leaf -->
 
     <owl:Class rdf:about="http://www.opensilex.org/vocabulary/oeso#Leaf">
@@ -1719,12 +1729,6 @@
     <owl:Class rdf:about="http://www.opensilex.org/vocabulary/oeso#ScientificObject">
         <rdfs:subClassOf>
             <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.opensilex.org/vocabulary/oeso#hasGermplasm"/>
-                <owl:onClass rdf:resource="http://www.opensilex.org/vocabulary/oeso#Germplasm"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-        <rdfs:subClassOf>
-            <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.opensilex.org/vocabulary/oeso#hasReplication"/>
                 <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
                 <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
@@ -2126,6 +2130,16 @@
     
 
 
+    <!-- http://www.opensilex.org/vocabulary/oeso-sixtine#JeSuisUnConceptDeSixtineAvecUneURISixtine -->
+
+    <owl:Class rdf:about="http://www.opensilex.org/vocabulary/oeso-sixtine#JeSuisUnConceptDeSixtineAvecUneURISixtine">
+        <rdfs:subClassOf rdf:resource="http://www.opensilex.org/vocabulary/oeso#ScientificObject"/>
+        <rdfs:label xml:lang="en">uri sixitne</rdfs:label>
+        <rdfs:label xml:lang="en">uri sixtine</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://xmlns.com/foaf/0.1/Organization -->
 
     <owl:Class rdf:about="http://xmlns.com/foaf/0.1/Organization">
@@ -2256,8 +2270,8 @@
         <rdfs:label xml:lang="fr">ouverture (fnumber)</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.opensilex.org/vocabulary/oeso#attenuatorFilter">
-        <rdfs:label xml:lang="en">attenuator filter</rdfs:label>
         <rdfs:label xml:lang="fr">filtre atténuateur</rdfs:label>
+        <rdfs:label xml:lang="en">attenuator filter</rdfs:label>
     </rdf:Description>
     <rdf:Description rdf:about="http://www.opensilex.org/vocabulary/oeso#brdfP1">
         <rdfs:comment xml:lang="en">BRDF(θ)=P1+P2cos(θ)+1/2*P3(3*cos^2θ−1)+1/2*P4(5*cos^3θ−3*cosθ)</rdfs:comment>
