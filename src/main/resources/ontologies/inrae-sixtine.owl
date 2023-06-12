@@ -813,6 +813,16 @@
     
 
 
+    <!-- http://purl.obolibrary.org/obo/PO_0025024 -->
+
+    <owl:Class rdf:about="http://purl.obolibrary.org/obo/PO_0025024">
+        <rdfs:subClassOf rdf:resource="http://www.opensilex.org/vocabulary/oeso#ScientificObject"/>
+        <rdfs:label xml:lang="en">branch node</rdfs:label>
+        <rdfs:label xml:lang="fr">noeud de branche</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://www.opensilex.org/vocabulary/oeso#Accession -->
 
     <owl:Class rdf:about="http://www.opensilex.org/vocabulary/oeso#Accession">
