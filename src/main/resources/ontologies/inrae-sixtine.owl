@@ -1290,16 +1290,6 @@
     
 
 
-    <!-- http://www.opensilex.org/vocabulary/oeso#JeSuisUnConceptDeSixtine -->
-
-    <owl:Class rdf:about="http://www.opensilex.org/vocabulary/oeso#JeSuisUnConceptDeSixtine">
-        <rdfs:subClassOf rdf:resource="http://www.opensilex.org/vocabulary/oeso#ScientificObject"/>
-        <rdfs:label xml:lang="en">JeSuisUnConceptDeSixtine</rdfs:label>
-        <rdfs:label xml:lang="fr">JeSuisUnConceptDeSixtine</rdfs:label>
-    </owl:Class>
-    
-
-
     <!-- http://www.opensilex.org/vocabulary/oeso#Leaf -->
 
     <owl:Class rdf:about="http://www.opensilex.org/vocabulary/oeso#Leaf">
@@ -2137,17 +2127,6 @@
         <rdfs:label xml:lang="en">Wind Vane</rdfs:label>
         <rdfs:label xml:lang="fr">Wind Vane</rdfs:label>
     </owl:Class>
-    
-
-
-    <!-- http://www.opensilex.org/vocabulary/oeso-sixtine#JeSuisUnConceptDeSixtineAvecUneURISixtine -->
-
-    <owl:Class rdf:about="http://www.opensilex.org/vocabulary/oeso-sixtine#JeSuisUnConceptDeSixtineAvecUneURISixtine">
-        <rdfs:subClassOf rdf:resource="http://www.opensilex.org/vocabulary/oeso#ScientificObject"/>
-        <rdfs:label xml:lang="en">uri sixitne</rdfs:label>
-        <rdfs:label xml:lang="en">uri sixtine</rdfs:label>
-    </owl:Class>
-    
 
 
     <!-- http://xmlns.com/foaf/0.1/Organization -->
