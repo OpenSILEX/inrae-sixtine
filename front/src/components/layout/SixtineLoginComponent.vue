@@ -26,6 +26,23 @@
           "
           alt="Responsive image"
         ></b-img> 
+        <p>
+          {{ $t("LoginComponent.copyright.1" ) }}
+          <br />
+          {{ $t("LoginComponent.copyright.2", {
+          version: getSIXTINEModuleVersion()
+          }) }}
+          <br />
+          {{ $t("LoginComponent.copyright.3", {
+          version: versionInfo.version
+          }) }}
+          <br />
+          {{
+          $t("LoginComponent.copyright.4", {
+          version: versionInfo.version
+          })
+          }}
+        </p>
     </template>
   </opensilex-DefaultLoginComponent>
 </template>
@@ -44,6 +61,19 @@ export default class SixtineLoginComponent extends Vue {
 
   created() {
     this.versionInfo = this.$opensilex.versionInfo;
+  }
+
+
+    getSIXTINEModuleVersion(){
+    for(let module_version_index in this.versionInfo.modules_version){
+      let module = this.versionInfo.modules_version[module_version_index]
+
+      console.log(module)
+      if(module.name.includes("SixtineModule")){
+        return module.version;
+      }
+    }
+    return 'Version undefined'
   }
 
 }
